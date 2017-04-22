@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import ru.codemonkeystudio.objects.Board;
 
 /**
  * Created by maximus on 22.04.17.
@@ -22,7 +23,7 @@ public class GameRenderer {
 	private TextureRegion[] boardCells;
 
 	//game objects
-
+	private Board board;
 
 	public GameRenderer (GameWorld world) {
 		this.world = world;
@@ -49,24 +50,21 @@ public class GameRenderer {
 	}
 
 	private void initGameObjects() {
-
+		board = world.getBoard();
 	}
 
 	public void render (float delta) {
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-//		camera.position.x = 0.0f;
-//		camera.position.y = 0.0f;
-
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		shapeRenderer.setProjectionMatrix(camera.combined);
 
 		batch.begin();
-		for (int y = 0; y < 3; y++) {
-			for (int x = 0; x < 4; x++) {
-				batch.draw(boardCells[y * 4 + x], x * 16 * 4, y * 16 * 4, 16 * 4, 16 * 4);
+		for (int y = 0; y < board.SIZE; y++) {
+			for (int x = 0; x < board.SIZE; x++) {
+				batch.draw(boardCells[board.getGrid()[x][y]] , x * 16 * 4, y * 16 * 4, 16 * 4, 16 * 4);
 			}
 		}
 		batch.end();
@@ -74,5 +72,10 @@ public class GameRenderer {
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
 		shapeRenderer.end();
+	}
+
+	public void setCameraPosition(float x, float y) {
+		camera.position.x = x;
+		camera.position.y = y;
 	}
 }
