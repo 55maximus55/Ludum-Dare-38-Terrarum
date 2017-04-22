@@ -1,7 +1,5 @@
 package ru.codemonkeystudio.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import ru.codemonkeystudio.gameworld.GameRenderer;
 import ru.codemonkeystudio.gameworld.GameWorld;
@@ -31,13 +29,6 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		world.update(delta);
 		renderer.render(delta);
-
-
-		if (Gdx.input.isKeyPressed(Input.Keys.UP)) y -= 20;
-		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) y += 20;
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) x -= 20;
-		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) x += 20;
-		renderer.setCameraPosition(x, y);
 	}
 
 	@Override

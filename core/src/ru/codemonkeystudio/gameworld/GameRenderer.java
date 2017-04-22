@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import ru.codemonkeystudio.objects.Board;
+import ru.codemonkeystudio.objects.Player;
 
 /**
  * Created by maximus on 22.04.17.
@@ -24,6 +25,7 @@ public class GameRenderer {
 
 	//game objects
 	private Board board;
+	private Player player;
 
 	public GameRenderer (GameWorld world) {
 		this.world = world;
@@ -51,13 +53,17 @@ public class GameRenderer {
 
 	private void initGameObjects() {
 		board = world.getBoard();
+		player = world.getPlayer();
 	}
 
 	public void render (float delta) {
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		camera.position.x = player.getPos().x;
+		camera.position.y = player.getPos().y;
 		camera.update();
+
 		batch.setProjectionMatrix(camera.combined);
 		shapeRenderer.setProjectionMatrix(camera.combined);
 
@@ -70,12 +76,7 @@ public class GameRenderer {
 		batch.end();
 
 		shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
+		shapeRenderer.circle(player.getPos().x, player.getPos().y, player.getSize());
 		shapeRenderer.end();
-	}
-
-	public void setCameraPosition(float x, float y) {
-		camera.position.x = x;
-		camera.position.y = y;
 	}
 }
