@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * Created by maximus on 22.04.17.
  */
@@ -16,33 +13,80 @@ public class Player {
 
 	private float size;
 
-	private JFrame frame;
-	private JLabel[] label;
-
 	public Player () {
 		pos = new Vector2(0, 0);
 		velocity = new Vector2(0, 0);
 		size = 2;
-
-		frame = new JFrame("Debug window");
-		frame.setLayout(new GridLayout(3, 1));
-		label = new JLabel[3];
-		for (int i = 0; i < 3; i++){
-			label[i] = new JLabel();
-			frame.add(label[i]);
-		}
-		frame.setSize(200, 300);
-		frame.setVisible(true);
 	}
 
 	public void update() {
-		label[0].setText("angle: " + (Math.tanh(velocity.y / velocity.x)));
 		control();
 
-		float s = 0.05f;
+		stop();
 
 		pos.x += velocity.x;
 		pos.y += velocity.y;
+	}
+
+	private void stop() {
+		float s = 0.05f;
+
+		if (velocity.x == 0) {
+			if (velocity.y > 0) {
+				if (velocity.y > s) {
+					velocity.y -= s;
+				}
+				else {
+					velocity.y = 0;
+				}
+			}
+			else if (velocity.y < 0) {
+				if (-velocity.y > s) {
+					velocity.y += s;
+				}
+				else {
+					velocity.y = 0;
+				}
+			}
+		}
+		else if (velocity.y == 0) {
+			if (velocity.x > 0) {
+				if (velocity.x > s) {
+					velocity.x -= s;
+				}
+				else {
+					velocity.x = 0;
+				}
+			}
+			else if (velocity.x < 0) {
+				if (-velocity.x > s) {
+					velocity.x += s;
+				}
+				else {
+					velocity.x = 0;
+				}
+			}
+		}
+		else {
+			float angle = 0;
+			angle += Math.abs(Math.toDegrees(Math.atan(velocity.y / velocity.x)));
+			if (velocity.x > 0) {
+				velocity.x -= Math.cos(Math.toRadians(angle)) * s;
+				if (velocity.x < 0) velocity.x = 0;
+			}
+			else {
+				velocity.x += Math.cos(Math.toRadians(angle)) * s;
+				if (velocity.x > 0) velocity.x = 0;
+			}
+			if (velocity.y > 0) {
+				velocity.y -= Math.sin(Math.toRadians(angle)) * s;
+				if (velocity.y < 0) velocity.y = 0;
+			}
+			else {
+				velocity.y += Math.sin(Math.toRadians(angle)) * s;
+				if (velocity.y > 0) velocity.y = 0;
+			}
+		}
 	}
 
 	private void control () {
@@ -59,7 +103,7 @@ public class Player {
 		if (Gdx.input.isKeyPressed(Input.Keys.A)) x--;
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) x++;
 
-		float a = 0.2f;
+		float a = 0.08f;
 		float xx = 0, yy = 0;
 
 		if (x == -1) {
@@ -110,7 +154,6 @@ public class Player {
 	}
 
 	public Vector2 getPos() {
-
 		return pos;
 	}
 
