@@ -123,7 +123,7 @@ public class GameRenderer {
 		rayHandler.setCombinedMatrix(camera);
 		rayHandler.updateAndRender();
 
-//		debugRenderer.render(boxWorld, camera.combined);
+		debugRenderer.render(boxWorld, camera.combined);
 	}
 
 	public void resize (int width, int height) {

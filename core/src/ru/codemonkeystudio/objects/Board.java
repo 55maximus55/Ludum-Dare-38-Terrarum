@@ -31,28 +31,29 @@ public class Board {
 		BodyDef wall;
 		PolygonShape shape;
 
-		wall = new BodyDef();
+		wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
+		wall.type = BodyDef.BodyType.StaticBody;
 		wall.position.set(-4, 64 * SIZE / 2);
 		body = world.createBody(wall);
 		shape = new PolygonShape();
 		shape.setAsBox(2 * 2, 64 * SIZE / 2 + 8);
 		body.createFixture(shape, 0);
 
-		wall = new BodyDef();
+		wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 		wall.position.set(4 + 64 * SIZE, 64 * SIZE / 2);
 		body = world.createBody(wall);
 		shape = new PolygonShape();
 		shape.setAsBox(2 * 2, 64 * SIZE / 2 + 8);
 		body.createFixture(shape, 0);
 
-		wall = new BodyDef();
+		wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 		wall.position.set(64 * SIZE / 2, - 4);
 		body = world.createBody(wall);
 		shape = new PolygonShape();
 		shape.setAsBox(64 * SIZE / 2, 2 * 2);
 		body.createFixture(shape, 0);
 
-		wall = new BodyDef();
+		wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 		wall.position.set(64 * SIZE / 2, 4 + 64 * SIZE);
 		body = world.createBody(wall);
 		shape = new PolygonShape();
@@ -66,14 +67,14 @@ public class Board {
 				cells.remove(r);
 				switch (grid[x][y]) {
 					case 0:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 * 2, y * 4 * 16 + 2 * 16);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 2, 2 * 16);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 * 6 + 2 * 4 + 2, y * 4 * 16 + 2 * 2 + 2 * 16 - 4);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -81,14 +82,14 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 1:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 + 24 * 2, y * 4 * 16 + 4 * 16 - 2 * 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 7, 2 * 2);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 16 * 2, y * 4 * 16 + 4 * 16 - 2 * 8 - 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -96,7 +97,7 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 2:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 16 * 2, y * 4 * 16 + 4 * 16 - 2 * 8 - 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -104,14 +105,14 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 3:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 16 * 2, y * 4 * 16 + 4 * 16 - 2 * 24 + 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 2, 2 * 9);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 + 24 * 2 - 2 * 16 - 4, y * 4 * 16 + 4 * 16 - 4 * 16 + 2 * 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -119,14 +120,14 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 4:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 16 * 2, y * 4 * 16 + 4 * 16 - 2 * 8 - 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 2, 2 * 9);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 + 24 * 2 - 2 * 16 - 4, y * 4 * 16 + 4 * 16 - 2 * 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -134,21 +135,21 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 5:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 16 * 2, y * 4 * 16 + 4 * 16 - 2 * 8 - 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 2, 2 * 9);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 + 24 * 2, y * 4 * 16 + 4 * 16 - 2 * 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 7, 2 * 2);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 + 24 * 2 - 2 * 16 - 4, y * 4 * 16 + 4 * 16 - 2 * 2 - 16 * 2 + 4);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -156,14 +157,14 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 6:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 + 24 * 2, y * 4 * 16 + 4 * 16 - 2 * 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 7, 2 * 2);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 16 * 2, y * 4 * 16 + 4 * 16 - 2 * 8 - 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -171,7 +172,7 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 7:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 * 16, y * 4 * 16 + 2 * 2 + 60 - 4);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -179,14 +180,14 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 8:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 16 * 2, y * 4 * 16 + 4 * 16 - 2 * 8 - 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 2, 2 * 9);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 + 24 * 2 - 2 * 16 - 4, y * 4 * 16 + 4 * 16 - 2 * 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -194,14 +195,14 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 9:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 + 24 * 2 - 2 * 16 - 4, y * 4 * 16 + 4 * 16 - 2 * 2 - 16 * 2 + 4);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 7, 2 * 2);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 16 * 2, y * 4 * 16 + 4 * 16 - 2 * 8 - 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -209,14 +210,14 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 10:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 + 24 * 2 - 2 * 16 - 4, y * 4 * 16 + 4 * 16 - 2 * 2 - 16 * 2 + 4);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 7, 2 * 2);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 16 * 2, y * 4 * 16 + 4 * 16 - 2 * 8 - 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
@@ -224,14 +225,14 @@ public class Board {
 						body.createFixture(shape, 0);
 						break;
 					case 11:
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 2 + 24 * 2 - 2 * 16 - 4 + 32 - 4, y * 4 * 16 + 4 * 16 - 2 * 2 - 16 * 2 + 4);
 						body = world.createBody(wall);
 						shape = new PolygonShape();
 						shape.setAsBox(2 * 7, 2 * 2);
 						body.createFixture(shape, 0);
 
-						wall = new BodyDef();
+						wall = new BodyDef(); 		wall.type = BodyDef.BodyType.StaticBody;
 						wall.position.set(x * 4 * 16 + 16 * 2 + 32 - 4, y * 4 * 16 + 4 * 16 - 2 * 8 - 2);
 						body = world.createBody(wall);
 						shape = new PolygonShape();

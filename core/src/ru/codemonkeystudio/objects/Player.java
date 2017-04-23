@@ -25,7 +25,7 @@ public class Player {
 		size = 2;
 
 		bDef = new BodyDef();
-		bDef.type = BodyDef.BodyType.StaticBody;
+		bDef.type = BodyDef.BodyType.KinematicBody;
 		bDef.position.set(0, 0);
 		body = world.createBody(bDef);
 

@@ -65,6 +65,8 @@ public class GameWorld {
 				iterator.remove();
 			}
 		}
+
+		world.step(delta, 6, 2);
 	}
 
 	public Board getBoard() {
