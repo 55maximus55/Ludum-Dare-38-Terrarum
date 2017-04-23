@@ -14,12 +14,16 @@ public class Board {
 	public static final int SIZE = 8;
 
 	private byte grid[][];
+	public int x, y;
 
 	public Board () {
 		grid = new byte[SIZE][SIZE];
 	}
 
 	public void newGrid(World world) {
+		x = 490;
+		y = 500;
+
 		ArrayList cells = new ArrayList();
 		for (int i = 0; i < (int)(SIZE * SIZE * 2.625 / 12); i++) {
 			for (int j = 0; j < 12; j++) {

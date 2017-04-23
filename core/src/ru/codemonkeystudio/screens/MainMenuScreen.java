@@ -124,16 +124,12 @@ public class MainMenuScreen implements Screen {
 			}
 			if (selection == 2) {
 				dispose();
-//				game.setScreen(new OptionsMenuScreen(game));
+//				game.setScreen(new SettingsScreen(game));
 			}
 			if (selection == 3) {
 				dispose();
 				Gdx.app.exit();
 			}
-		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-			dispose();
-			Gdx.app.exit();
 		}
 	}
 

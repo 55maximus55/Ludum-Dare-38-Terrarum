@@ -1,11 +1,13 @@
 package ru.codemonkeystudio.gameworld;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.World;
+import ru.codemonkeystudio.helpers.MyContactListener;
 import ru.codemonkeystudio.objects.Board;
 import ru.codemonkeystudio.objects.Player;
 import ru.codemonkeystudio.objects.Trail;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -13,17 +15,21 @@ import java.util.Iterator;
  * Created by maximus on 22.04.17.
  */
 public class GameWorld {
+	private GameRenderer renderer;
 	private World world;
 	private Board board;
 	private Player player;
-
-	private Body body;
-	private BodyDef bDef;
+	public boolean fin, win;
 
 	private ArrayList trail;
 
 	public GameWorld () {
 		initGameObjects();
+	}
+
+	public void setRenderer (GameRenderer renderer) {
+		this.renderer = renderer;
+		world.setContactListener(new MyContactListener(player, renderer));
 	}
 
 	private void initGameObjects() {
@@ -34,22 +40,8 @@ public class GameWorld {
 		player = new Player(world);
 
 		trail = new ArrayList();
-
-//		bDef = new BodyDef();
-//		bDef.type = BodyDef.BodyType.StaticBody;
-//		bDef.position.set(100, 0);
-//		body = world.createBody(bDef);
-//
-//		CircleShape shape = new CircleShape();
-//		shape.setRadius(30);
-//
-//		FixtureDef fDef = new FixtureDef();
-//		fDef.shape = shape;
-//		fDef.density = 1;
-//		fDef.friction = 1;
-//		fDef.restitution = 1;
-//
-//		body.createFixture(fDef);
+		fin = false;
+		win = false;
 	}
 
 	public void update(float delta) {
@@ -66,7 +58,23 @@ public class GameWorld {
 			}
 		}
 
-		world.step(delta, 6, 2);
+		world.step(delta, 1, 1);
+		if ((player.getPos().x - 490) * (player.getPos().x - 490) + (player.getPos().y - 500) * (player.getPos().y - 500) <= 50 * 50) {
+			fin = true;
+		}
+		if (fin && renderer.fLight.getDistance() >= 0) {
+			renderer.fLight.setDistance(renderer.fLight.getDistance() - 1);
+			renderer.ffLight.setDistance(renderer.ffLight.getDistance() + 1);
+			if (renderer.ffLight.getDistance() >= 50) {
+				renderer.ffLight.setDistance(50);
+			}
+		}
+
+		if (fin && (player.getPos().x - 16) * (player.getPos().x - 16) + (player.getPos().y - 16) * (player.getPos().y - 516) <= 50 * 50) {
+			JOptionPane.showMessageDialog(null, "Вы выиграли");
+			win = true;
+		}
+//		System.out.println(player.getPos().x + " " + player.getPos().y);
 	}
 
 	public Board getBoard() {

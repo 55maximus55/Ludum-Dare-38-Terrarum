@@ -1,9 +1,13 @@
 package ru.codemonkeystudio.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import ru.codemonkeystudio.game.MyGdxGame;
 import ru.codemonkeystudio.gameworld.GameRenderer;
 import ru.codemonkeystudio.gameworld.GameWorld;
+
+import javax.swing.*;
 
 /**
  * Created by maximus on 22.04.17.
@@ -14,14 +18,11 @@ public class GameScreen implements Screen {
 	private GameWorld world;
 	private GameRenderer renderer;
 
-	private float x, y;
-
 	public GameScreen(MyGdxGame game) {
 		this.game = game;
 		world = new GameWorld();
 		renderer = new GameRenderer(world);
-
-		x = 0; y = 0;
+		world.setRenderer(renderer);
 	}
 
 	@Override
@@ -33,6 +34,16 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		world.update(delta);
 		renderer.render(delta);
+		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) game.setScreen(new MainMenuScreen(game));
+
+		if (world.getPlayer().lives <= 0) {
+			JOptionPane.showMessageDialog(null, "Вы проиграли");
+			game.setScreen(new MainMenuScreen(game));
+		}
+		if (world.win) {
+			game.setScreen(new MainMenuScreen(game));
+			JOptionPane.showMessageDialog(null, "Вы выиграли");
+		}
 	}
 
 	@Override

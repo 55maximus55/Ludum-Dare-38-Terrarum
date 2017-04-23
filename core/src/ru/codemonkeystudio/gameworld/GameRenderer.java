@@ -3,7 +3,6 @@ package ru.codemonkeystudio.gameworld;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,6 +30,7 @@ public class GameRenderer {
 
 	private RayHandler rayHandler;
 	private Box2DDebugRenderer debugRenderer;
+	private ShapeRenderer gui;
 
 	//assets
 	private Texture boardTexture;
@@ -42,6 +42,8 @@ public class GameRenderer {
 	private Player player;
 	private ArrayList trail;
 	private PointLight light;
+	public PointLight fLight;
+	public PointLight ffLight;
 
 	public GameRenderer (GameWorld world) {
 		this.world = world;
@@ -50,9 +52,12 @@ public class GameRenderer {
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(true);
+		camera.zoom = 7;
 
 		shapeRenderer = new ShapeRenderer();
 		batch = new SpriteBatch();
+
+		gui = new ShapeRenderer();
 	}
 
 	private void initAssets() {
@@ -80,17 +85,17 @@ public class GameRenderer {
 		rayHandler.setShadows(true);
 		rayHandler.setCulling(true);
 		rayHandler.setAmbientLight(0);
-//		rayHandler.setAmbientLight(0.6f);
-		light = new PointLight(rayHandler, 500, Color.RED, 70, player.getPos().x, player.getPos().y);
+//		rayHandler.setAmbientLight(1);
+		light = new PointLight(rayHandler, 400, Color.RED, 100, player.getPos().x, player.getPos().y);
+		light.attachToBody(player.getBody());
 		debugRenderer = new Box2DDebugRenderer();
+		fLight = new PointLight(rayHandler, 400, Color.YELLOW, 50, 490, 500);
+		ffLight = new PointLight(rayHandler, 400, Color.YELLOW, 0, 16, 16);
 	}
 
 	public void render (float delta) {
 		Gdx.gl20.glClearColor(0, 0.16f, 1, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		if (Gdx.input.isKeyPressed(Input.Keys.PAGE_UP)) camera.zoom += 0.4;
-		if (Gdx.input.isKeyPressed(Input.Keys.PAGE_DOWN)) camera.zoom -= 0.4;
 
 		camera.position.x = player.getPos().x;
 		camera.position.y = player.getPos().y;
@@ -118,12 +123,27 @@ public class GameRenderer {
 		}
 		shapeRenderer.end();
 
-		light.setPosition(player.getPos());
-
 		rayHandler.setCombinedMatrix(camera);
+
 		rayHandler.updateAndRender();
 
-		debugRenderer.render(boxWorld, camera.combined);
+		if (light.getDistance() <= 100) {
+			light.setColor(Color.RED);
+			light.setDistance(100);
+		}
+		else {
+			light.setDistance(light.getDistance() - 20);
+		}
+
+		gui.begin(ShapeRenderer.ShapeType.Filled);
+		gui.setColor(Color.RED);
+		gui.rect(0, 0,  Gdx.graphics.getWidth() / 5 * player.lives, 10);
+		gui.end();
+	}
+
+	public void livesEffect () {
+		light.setDistance(1000);
+		light.setColor(Color.WHITE);
 	}
 
 	public void resize (int width, int height) {
