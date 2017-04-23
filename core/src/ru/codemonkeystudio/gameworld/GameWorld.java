@@ -1,5 +1,7 @@
 package ru.codemonkeystudio.gameworld;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import ru.codemonkeystudio.objects.Board;
 import ru.codemonkeystudio.objects.Player;
 import ru.codemonkeystudio.objects.Trail;
@@ -11,8 +13,12 @@ import java.util.Iterator;
  * Created by maximus on 22.04.17.
  */
 public class GameWorld {
+	private World world;
 	private Board board;
 	private Player player;
+
+	private Body body;
+	private BodyDef bDef;
 
 	private ArrayList trail;
 
@@ -24,9 +30,27 @@ public class GameWorld {
 		board = new Board();
 		board.newGrid();
 
-		player = new Player();
+		world = new World(new Vector2(0, 0), true);
+
+		player = new Player(world);
 
 		trail = new ArrayList();
+
+		bDef = new BodyDef();
+		bDef.type = BodyDef.BodyType.StaticBody;
+		bDef.position.set(100, 0);
+		body = world.createBody(bDef);
+
+		CircleShape shape = new CircleShape();
+		shape.setRadius(30);
+
+		FixtureDef fDef = new FixtureDef();
+		fDef.shape = shape;
+		fDef.density = 1;
+		fDef.friction = 1;
+		fDef.restitution = 1;
+
+		body.createFixture(fDef);
 	}
 
 	public void update(float delta) {
@@ -54,5 +78,9 @@ public class GameWorld {
 
 	public ArrayList getTrail() {
 		return trail;
+	}
+
+	public World getWorld() {
+		return world;
 	}
 }

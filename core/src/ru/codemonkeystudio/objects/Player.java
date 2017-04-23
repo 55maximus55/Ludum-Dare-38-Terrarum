@@ -3,20 +3,42 @@ package ru.codemonkeystudio.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 
 /**
  * Created by maximus on 22.04.17.
  */
 public class Player {
+	private Body body;
+	private BodyDef bDef;
+
+	CircleShape shape;
+
 	private Vector2 pos;
 	private Vector2 velocity;
 
 	private float size;
 
-	public Player () {
+	public Player (World world) {
 		pos = new Vector2(0, 0);
 		velocity = new Vector2(0, 0);
 		size = 2;
+
+		bDef = new BodyDef();
+		bDef.type = BodyDef.BodyType.StaticBody;
+		bDef.position.set(0, 0);
+		body = world.createBody(bDef);
+
+		CircleShape shape = new CircleShape();
+		shape.setRadius(2);
+
+		FixtureDef fDef = new FixtureDef();
+		fDef.shape = shape;
+		fDef.density = 1;
+		fDef.friction = 1;
+		fDef.restitution = 1;
+
+		body.createFixture(fDef);
 	}
 
 	public void update() {
@@ -26,6 +48,9 @@ public class Player {
 
 		pos.x += velocity.x;
 		pos.y += velocity.y;
+
+		bDef.position.set(pos);
+		body.setTransform(pos, 0);
 	}
 
 	private void stop() {
@@ -155,6 +180,10 @@ public class Player {
 
 	public Vector2 getPos() {
 		return pos;
+	}
+
+	public Body getBody() {
+		return body;
 	}
 
 	public float getSize() {
