@@ -36,13 +36,14 @@ public class GameScreen implements Screen {
 		renderer.render(delta);
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) game.setScreen(new MainMenuScreen(game));
 
-		if (world.getPlayer().lives <= 0) {
-			JOptionPane.showMessageDialog(null, "Вы проиграли");
+		if (world.getPlayer().lives < 0) {
 			game.setScreen(new MainMenuScreen(game));
+			JOptionPane.showMessageDialog(null, "Вы проиграли");
 		}
 		if (world.win) {
 			game.setScreen(new MainMenuScreen(game));
 			JOptionPane.showMessageDialog(null, "Вы выиграли");
+			world.win = false;
 		}
 	}
 

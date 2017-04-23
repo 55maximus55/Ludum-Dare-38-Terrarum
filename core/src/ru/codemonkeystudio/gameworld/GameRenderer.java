@@ -89,7 +89,7 @@ public class GameRenderer {
 		light = new PointLight(rayHandler, 400, Color.RED, 100, player.getPos().x, player.getPos().y);
 		light.attachToBody(player.getBody());
 		debugRenderer = new Box2DDebugRenderer();
-		fLight = new PointLight(rayHandler, 400, Color.YELLOW, 50, 490, 500);
+		fLight = new PointLight(rayHandler, 400, Color.YELLOW, 75, 490, 500);
 		ffLight = new PointLight(rayHandler, 400, Color.YELLOW, 0, 16, 16);
 	}
 

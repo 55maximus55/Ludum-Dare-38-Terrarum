@@ -59,7 +59,7 @@ public class GameWorld {
 		}
 
 		world.step(delta, 1, 1);
-		if ((player.getPos().x - 490) * (player.getPos().x - 490) + (player.getPos().y - 500) * (player.getPos().y - 500) <= 50 * 50) {
+		if ((player.getPos().x - 490) * (player.getPos().x - 490) + (player.getPos().y - 500) * (player.getPos().y - 500) <= 25 * 25) {
 			fin = true;
 		}
 		if (fin && renderer.fLight.getDistance() >= 0) {
@@ -70,9 +70,13 @@ public class GameWorld {
 			}
 		}
 
-		if (fin && (player.getPos().x - 16) * (player.getPos().x - 16) + (player.getPos().y - 16) * (player.getPos().y - 516) <= 50 * 50) {
+		if (fin && (player.getPos().x - 16) * (player.getPos().x - 16) + (player.getPos().y - 16) * (player.getPos().y - 16) <= 25 * 25) {
 			JOptionPane.showMessageDialog(null, "Вы выиграли");
 			win = true;
+		}
+
+		if (fin && renderer.ffLight.getDistance() < 75) {
+			renderer.ffLight.setDistance(renderer.ffLight.getDistance() + 1);
 		}
 //		System.out.println(player.getPos().x + " " + player.getPos().y);
 	}
