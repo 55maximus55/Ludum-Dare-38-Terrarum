@@ -27,30 +27,29 @@ public class GameWorld {
 	}
 
 	private void initGameObjects() {
-		board = new Board();
-		board.newGrid();
-
 		world = new World(new Vector2(0, 0), true);
+		board = new Board();
+		board.newGrid(world);
 
 		player = new Player(world);
 
 		trail = new ArrayList();
 
-		bDef = new BodyDef();
-		bDef.type = BodyDef.BodyType.StaticBody;
-		bDef.position.set(100, 0);
-		body = world.createBody(bDef);
-
-		CircleShape shape = new CircleShape();
-		shape.setRadius(30);
-
-		FixtureDef fDef = new FixtureDef();
-		fDef.shape = shape;
-		fDef.density = 1;
-		fDef.friction = 1;
-		fDef.restitution = 1;
-
-		body.createFixture(fDef);
+//		bDef = new BodyDef();
+//		bDef.type = BodyDef.BodyType.StaticBody;
+//		bDef.position.set(100, 0);
+//		body = world.createBody(bDef);
+//
+//		CircleShape shape = new CircleShape();
+//		shape.setRadius(30);
+//
+//		FixtureDef fDef = new FixtureDef();
+//		fDef.shape = shape;
+//		fDef.density = 1;
+//		fDef.friction = 1;
+//		fDef.restitution = 1;
+//
+//		body.createFixture(fDef);
 	}
 
 	public void update(float delta) {

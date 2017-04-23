@@ -79,9 +79,9 @@ public class GameRenderer {
 		rayHandler.setBlurNum(1);
 		rayHandler.setShadows(true);
 		rayHandler.setCulling(true);
-		rayHandler.setAmbientLight(0.15f);
-
-		light = new PointLight(rayHandler, 100, Color.RED, 60, player.getPos().x, player.getPos().y);
+		rayHandler.setAmbientLight(0);
+//		rayHandler.setAmbientLight(0.6f);
+		light = new PointLight(rayHandler, 500, Color.RED, 70, player.getPos().x, player.getPos().y);
 		debugRenderer = new Box2DDebugRenderer();
 	}
 
@@ -123,7 +123,7 @@ public class GameRenderer {
 		rayHandler.setCombinedMatrix(camera);
 		rayHandler.updateAndRender();
 
-		debugRenderer.render(boxWorld, camera.combined);
+//		debugRenderer.render(boxWorld, camera.combined);
 	}
 
 	public void resize (int width, int height) {
