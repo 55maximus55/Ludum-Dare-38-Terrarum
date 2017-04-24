@@ -37,7 +37,9 @@ public class MyContactListener implements ContactListener {
 	public void preSolve(Contact contact, Manifold oldManifold) {
 		player.lives--;
 		renderer.livesEffect();
-		hitSound.play();
+		if (player.lives >= 0) {
+			hitSound.play();
+		}
 	}
 
 	@Override

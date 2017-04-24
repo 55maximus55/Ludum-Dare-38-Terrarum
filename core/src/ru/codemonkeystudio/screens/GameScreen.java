@@ -3,6 +3,7 @@ package ru.codemonkeystudio.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import ru.codemonkeystudio.game.MyGdxGame;
 import ru.codemonkeystudio.gameworld.GameRenderer;
@@ -20,7 +21,7 @@ public class GameScreen implements Screen {
 	private GameRenderer renderer;
 
 	private Sound winSound;
-	private Sound loseSound;
+	private Music loseSound;
 
 	public GameScreen(MyGdxGame game) {
 		this.game = game;
@@ -28,7 +29,7 @@ public class GameScreen implements Screen {
 		renderer = new GameRenderer(world);
 		world.setRenderer(renderer);
 		winSound = Gdx.audio.newSound(Gdx.files.internal("sounds/win.wav"));
-		loseSound = Gdx.audio.newSound(Gdx.files.internal("sounds/lose.wav"));
+		loseSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/lose.mp3"));
 	}
 
 	@Override
@@ -44,8 +45,8 @@ public class GameScreen implements Screen {
 
 		if (world.getPlayer().lives < 0) {
 			game.setScreen(new MainMenuScreen(game));
-			loseSound.play();
 			JOptionPane.showMessageDialog(null, "You lose!");
+			loseSound.play();
 		}
 		if (world.win && renderer.ffLight.getDistance() >= 2f) {
 			renderer.ffLight.setDistance(renderer.ffLight.getDistance() - 1f);

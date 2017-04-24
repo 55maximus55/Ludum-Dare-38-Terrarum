@@ -3,6 +3,7 @@ package ru.codemonkeystudio.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,6 +23,7 @@ public class MainMenuScreen implements Screen {
 	private Texture logo;
 	private TextureRegion[] button;
 	private int selection, cursorX, cursorY;
+	private Sound sound;
 
 	public MainMenuScreen(MyGdxGame game) {
 		this.game = game;
@@ -43,6 +45,8 @@ public class MainMenuScreen implements Screen {
 		selection = -1;
 		cursorX = 0;
 		cursorY = 0;
+
+		sound = Gdx.audio.newSound(Gdx.files.internal("sounds/select.wav"));
 	}
 
 	@Override
@@ -77,6 +81,7 @@ public class MainMenuScreen implements Screen {
 			if (selection > 3) {
 				selection = 0;
 			}
+			sound.play();
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 			selection++;
@@ -86,6 +91,7 @@ public class MainMenuScreen implements Screen {
 			if (selection > 3) {
 				selection = 0;
 			}
+			sound.play();
 		}
 
 //		if (cursorX != Gdx.input.getX() || cursorY != Gdx.input.getY()) {
