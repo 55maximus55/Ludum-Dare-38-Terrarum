@@ -7,7 +7,6 @@ import ru.codemonkeystudio.objects.Board;
 import ru.codemonkeystudio.objects.Player;
 import ru.codemonkeystudio.objects.Trail;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -19,7 +18,7 @@ public class GameWorld {
 	private World world;
 	private Board board;
 	private Player player;
-	public boolean fin, win;
+	public boolean fin, win, l;
 
 	private ArrayList trail;
 
@@ -42,6 +41,7 @@ public class GameWorld {
 		trail = new ArrayList();
 		fin = false;
 		win = false;
+		l = false;
 	}
 
 	public void update(float delta) {
@@ -61,22 +61,22 @@ public class GameWorld {
 		world.step(delta, 1, 1);
 		if ((player.getPos().x - 490) * (player.getPos().x - 490) + (player.getPos().y - 500) * (player.getPos().y - 500) <= 25 * 25) {
 			fin = true;
+			renderer.ffLight.setDistance(75);
+			l = true;
 		}
 		if (fin && renderer.fLight.getDistance() >= 0) {
 			renderer.fLight.setDistance(renderer.fLight.getDistance() - 1);
-			renderer.ffLight.setDistance(renderer.ffLight.getDistance() + 1);
-			if (renderer.ffLight.getDistance() >= 50) {
-				renderer.ffLight.setDistance(50);
-			}
 		}
 
-		if (fin && (player.getPos().x - 16) * (player.getPos().x - 16) + (player.getPos().y - 16) * (player.getPos().y - 16) <= 25 * 25) {
-			JOptionPane.showMessageDialog(null, "Вы выиграли");
+		if (fin && ((player.getPos().x - 16) * (player.getPos().x - 16) + (player.getPos().y - 16) * (player.getPos().y - 16)) <= 25 * 25) {
 			win = true;
 		}
 
-		if (fin && renderer.ffLight.getDistance() < 75) {
+		if (fin && renderer.ffLight.getDistance() < 75 && l) {
 			renderer.ffLight.setDistance(renderer.ffLight.getDistance() + 1);
+		}
+		else {
+			l = false;
 		}
 //		System.out.println(player.getPos().x + " " + player.getPos().y);
 	}

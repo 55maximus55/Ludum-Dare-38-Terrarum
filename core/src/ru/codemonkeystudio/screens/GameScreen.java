@@ -38,11 +38,14 @@ public class GameScreen implements Screen {
 
 		if (world.getPlayer().lives < 0) {
 			game.setScreen(new MainMenuScreen(game));
-			JOptionPane.showMessageDialog(null, "Вы проиграли");
+			JOptionPane.showMessageDialog(null, "You lose!");
 		}
-		if (world.win) {
+		if (world.win && renderer.ffLight.getDistance() >= 2f) {
+			renderer.ffLight.setDistance(renderer.ffLight.getDistance() - 1f);
+		}
+		if (world.win && renderer.ffLight.getDistance() <= 1) {
 			game.setScreen(new MainMenuScreen(game));
-			JOptionPane.showMessageDialog(null, "Вы выиграли");
+			JOptionPane.showMessageDialog(null, "You win!");
 			world.win = false;
 		}
 	}
