@@ -3,6 +3,8 @@ package ru.codemonkeystudio.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import ru.codemonkeystudio.game.MyGdxGame;
 import ru.codemonkeystudio.gameworld.GameRenderer;
 import ru.codemonkeystudio.gameworld.GameWorld;
@@ -18,11 +20,20 @@ public class GameScreen implements Screen {
 	private GameWorld world;
 	private GameRenderer renderer;
 
+	private Sound winSound;
+	private Music loseSound;
+	private Music music;
+
 	public GameScreen(MyGdxGame game) {
 		this.game = game;
 		world = new GameWorld();
 		renderer = new GameRenderer(world);
 		world.setRenderer(renderer);
+		winSound = Gdx.audio.newSound(Gdx.files.internal("sounds/win.wav"));
+		loseSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/lose.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/Terrarum.mp3"));
+		music.setLooping(true);
+		music.play();
 	}
 
 	@Override
@@ -34,15 +45,26 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		world.update(delta);
 		renderer.render(delta);
-		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) game.setScreen(new MainMenuScreen(game));
-
-		if (world.getPlayer().lives <= 0) {
-			JOptionPane.showMessageDialog(null, "Вы проиграли");
+		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
 			game.setScreen(new MainMenuScreen(game));
+			music.stop();
 		}
-		if (world.win) {
+
+		if (world.getPlayer().lives < 0) {
 			game.setScreen(new MainMenuScreen(game));
-			JOptionPane.showMessageDialog(null, "Вы выиграли");
+			music.stop();
+			JOptionPane.showMessageDialog(null, "You lose!");
+			loseSound.play();
+		}
+		if (world.win && renderer.ffLight.getDistance() >= 2f) {
+			renderer.ffLight.setDistance(renderer.ffLight.getDistance() - 1f);
+		}
+		if (world.win && renderer.ffLight.getDistance() <= 1) {
+			game.setScreen(new MainMenuScreen(game));
+			music.stop();
+			winSound.play();
+			JOptionPane.showMessageDialog(null, "You win!");
+			world.win = false;
 		}
 	}
 
