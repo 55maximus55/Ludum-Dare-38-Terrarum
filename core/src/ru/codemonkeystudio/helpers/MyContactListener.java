@@ -1,5 +1,7 @@
 package ru.codemonkeystudio.helpers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -13,10 +15,12 @@ import ru.codemonkeystudio.objects.Player;
 public class MyContactListener implements ContactListener {
 	private GameRenderer renderer;
 	private Player player;
+	private Sound hitSound;
 
 	public MyContactListener (Player player, GameRenderer renderer) {
 		this.player = player;
 		this.renderer = renderer;
+		hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/hit.wav"));
 	}
 
 	@Override
@@ -33,6 +37,7 @@ public class MyContactListener implements ContactListener {
 	public void preSolve(Contact contact, Manifold oldManifold) {
 		player.lives--;
 		renderer.livesEffect();
+		hitSound.play();
 	}
 
 	@Override
