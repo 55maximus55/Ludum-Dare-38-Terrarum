@@ -124,7 +124,7 @@ public class MainMenuScreen implements Screen {
 			}
 			if (selection == 2) {
 				dispose();
-//				game.setScreen(new SettingsScreen(game));
+				game.setScreen(new SettingsScreen(game));
 			}
 			if (selection == 3) {
 				dispose();
