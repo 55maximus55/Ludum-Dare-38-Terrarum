@@ -22,6 +22,7 @@ public class GameScreen implements Screen {
 
 	private Sound winSound;
 	private Music loseSound;
+	private Music music;
 
 	public GameScreen(MyGdxGame game) {
 		this.game = game;
@@ -30,6 +31,9 @@ public class GameScreen implements Screen {
 		world.setRenderer(renderer);
 		winSound = Gdx.audio.newSound(Gdx.files.internal("sounds/win.wav"));
 		loseSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/lose.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/Terrarum.mp3"));
+		music.setLooping(true);
+		music.play();
 	}
 
 	@Override
@@ -41,10 +45,14 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		world.update(delta);
 		renderer.render(delta);
-		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) game.setScreen(new MainMenuScreen(game));
+		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+			game.setScreen(new MainMenuScreen(game));
+			music.stop();
+		}
 
 		if (world.getPlayer().lives < 0) {
 			game.setScreen(new MainMenuScreen(game));
+			music.stop();
 			JOptionPane.showMessageDialog(null, "You lose!");
 			loseSound.play();
 		}
@@ -53,6 +61,7 @@ public class GameScreen implements Screen {
 		}
 		if (world.win && renderer.ffLight.getDistance() <= 1) {
 			game.setScreen(new MainMenuScreen(game));
+			music.stop();
 			winSound.play();
 			JOptionPane.showMessageDialog(null, "You win!");
 			world.win = false;
