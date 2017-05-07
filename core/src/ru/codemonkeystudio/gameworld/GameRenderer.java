@@ -86,7 +86,7 @@ public class GameRenderer {
 		rayHandler.setCulling(true);
 		rayHandler.setAmbientLight(0);
 //		rayHandler.setAmbientLight(0.3f);
-		light = new PointLight(rayHandler, 400, Color.RED, 100, player.getPos().x, player.getPos().y);
+		light = new PointLight(rayHandler, 4000, Color.RED, 100, player.getPos().x, player.getPos().y);
 		light.attachToBody(player.getBody());
 		debugRenderer = new Box2DDebugRenderer();
 		fLight = new PointLight(rayHandler, 400, Color.YELLOW, 75, 490, 500);

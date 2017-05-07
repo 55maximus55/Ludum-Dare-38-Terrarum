@@ -5,9 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import ru.codemonkeystudio.game.MyGdxGame;
 
 /**
@@ -16,6 +18,8 @@ import ru.codemonkeystudio.game.MyGdxGame;
 public class MainMenuScreen implements Screen {
 	private SpriteBatch batch;
 	private MyGdxGame game;
+	private OrthographicCamera gamecam;
+	private Viewport gamePort;
 
 	//menu assets
 	private Texture texture;
@@ -29,6 +33,8 @@ public class MainMenuScreen implements Screen {
 		this.game = game;
 		batch = new SpriteBatch();
 		logo = new Texture("gui/Terrarum.png");
+		//gamecam = new OrthographicCamera();
+		//gamePort = new FitViewport(800, 480, gamecam);
 
 		btnActive = new Texture[4];
 		btnInactive = new Texture[4];
@@ -58,6 +64,7 @@ public class MainMenuScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl20.glClearColor(0, 0, 0, 1);
 		Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//batch.setProjectionMatrix(gamecam.combined);
 
 		batch.begin();
 		batch.draw(logo, Gdx.graphics.getWidth() / 2 - logo.getWidth() / 2 * 10, Gdx.graphics.getHeight() - logo.getHeight() * 10 - 10, logo.getWidth() * 10, logo.getHeight() * 10);
@@ -71,7 +78,16 @@ public class MainMenuScreen implements Screen {
 		if (selection == 3) batch.draw(btnActive[3], Gdx.graphics.getWidth() / 2 - btnActive[0].getWidth() / 2 * 4, Gdx.graphics.getHeight() - btnActive[0].getHeight() * 10 - 10 - btnActive[0].getHeight() * 4 * 4, btnActive[0].getWidth() * 4, btnActive[0].getHeight() * 4);
 		else  batch.draw(btnInactive[3], Gdx.graphics.getWidth() / 2 - btnActive[0].getWidth() / 2 * 4, Gdx.graphics.getHeight() - btnActive[0].getHeight() * 10 - 10 - btnActive[0].getHeight() * 4 * 4, btnActive[0].getWidth() * 4, btnActive[0].getHeight() * 4);
 
-		batch.end();
+//		if(selection == 0) batch.draw(btnActive[0], Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		else  batch.draw(btnInactive[0], Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		if(selection == 1) batch.draw(btnActive[1], Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		else  batch.draw(btnInactive[1], Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		if(selection == 2) batch.draw(btnActive[2], Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		else  batch.draw(btnInactive[2], Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		if(selection == 3) batch.draw(btnActive[3], Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		else  batch.draw(btnInactive[3], Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+				batch.end();
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			selection--;
@@ -141,7 +157,7 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-
+		//gamePort.update(width, height);
 	}
 
 	@Override
