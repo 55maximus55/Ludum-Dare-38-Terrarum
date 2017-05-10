@@ -14,7 +14,7 @@ public class Player {
 	private Body body;
 	private BodyDef bDef;
 
-	private Vector2 pos;
+	private Vector2 ctrl;
 	private Vector2 velocity;
 
 	private float size;
@@ -22,6 +22,7 @@ public class Player {
 	public Player (World world) {
 		lives = 5;
 		velocity = new Vector2(0, 0);
+		ctrl = new Vector2(0,0 );
 		size = 2;
 
 		bDef = new BodyDef();
@@ -118,6 +119,45 @@ public class Player {
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) body.applyForceToCenter(25, 0, true);
 
 //		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) body.setLinearVelocity(0, 0);
+
+		if (Gdx.input.isTouched()) {
+			ctrl.set(Gdx.input.getX() - Gdx.graphics.getWidth() / 2, Gdx.input.getY() - Gdx.graphics.getHeight() / 2);
+
+			if (ctrl.x == 0) {
+				if (ctrl.y > 0) {
+					body.applyForceToCenter(0, 50, true);
+				}
+				else if (ctrl.y < 0){
+					body.applyForceToCenter(0, -50, true);
+				}
+			}
+			else if (ctrl.y == 0) {
+				if (ctrl.x > 0) {
+					body.applyForceToCenter(50, 0, true);
+				}
+				else if (ctrl.x < 0){
+					body.applyForceToCenter(-50, 0, true);
+				}
+			}
+			else {
+				float angle = 0;
+				angle += Math.abs(Math.toDegrees(Math.atan(ctrl.y / ctrl.x)));
+
+				if (ctrl.x > 0) {
+					body.applyForceToCenter((float) (50 * Math.cos(Math.toRadians(angle))), 0, true);
+				}
+				else {
+					body.applyForceToCenter((float) (-50 * Math.cos(Math.toRadians(angle))), 0, true);
+				}
+				if (ctrl.y > 0) {
+					body.applyForceToCenter(0, (float) (50 * Math.sin(Math.toRadians(angle))), true);
+				}
+				else {
+					body.applyForceToCenter(0, (float) (-50 * Math.sin(Math.toRadians(angle))), true);
+				}
+			}
+
+		}
 	}
 
 	public Vector2 getPos() {
