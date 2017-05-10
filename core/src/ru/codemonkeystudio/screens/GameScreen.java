@@ -5,11 +5,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import ru.codemonkeystudio.game.MyGdxGame;
 import ru.codemonkeystudio.gameworld.GameRenderer;
 import ru.codemonkeystudio.gameworld.GameWorld;
-
-import javax.swing.*;
 
 /**
  * Created by maximus on 22.04.17.
@@ -22,7 +26,10 @@ public class GameScreen implements Screen {
 
 	private Sound winSound;
 	private Music loseSound;
-	private Music music;
+
+	private List music;
+	private Music mus;
+	private int m;
 
 	public GameScreen(MyGdxGame game) {
 		this.game = game;
@@ -31,9 +38,16 @@ public class GameScreen implements Screen {
 		world.setRenderer(renderer);
 		winSound = Gdx.audio.newSound(Gdx.files.internal("sounds/win.wav"));
 		loseSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/lose.mp3"));
-		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/Terrarum.mp3"));
-		music.setLooping(true);
-		music.play();
+
+		music = new ArrayList();
+		music.add(Gdx.audio.newMusic(Gdx.files.internal("music/Michael Jackson - Beat It.mp3")));
+		music.add(Gdx.audio.newMusic(Gdx.files.internal("music/Michael  Jackson - Billie Jean.mp3")));
+		music.add(Gdx.audio.newMusic(Gdx.files.internal("music/Michael Jackson - Black Or White.mp3")));
+		music.add(Gdx.audio.newMusic(Gdx.files.internal("music/Michael Jackson - Smooth Criminal.mp3")));
+		m = 0;
+
+		mus = (Music) music.get(m);
+		mus.play();
 	}
 
 	@Override
@@ -47,24 +61,34 @@ public class GameScreen implements Screen {
 		renderer.render(delta);
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
 			game.setScreen(new MainMenuScreen(game));
-			music.stop();
+			mus.stop();
 		}
 
 		if (world.getPlayer().lives < 0) {
 			game.setScreen(new MainMenuScreen(game));
-			music.stop();
 			JOptionPane.showMessageDialog(null, "You lose!");
 			loseSound.play();
+			mus.stop();
 		}
 		if (world.win && renderer.ffLight.getDistance() >= 2f) {
 			renderer.ffLight.setDistance(renderer.ffLight.getDistance() - 1f);
 		}
 		if (world.win && renderer.ffLight.getDistance() <= 1) {
 			game.setScreen(new MainMenuScreen(game));
-			music.stop();
 			winSound.play();
+			mus.stop();
 			JOptionPane.showMessageDialog(null, "You win!");
 			world.win = false;
+		}
+
+		if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+			mus.stop();
+			m++;
+			if (m >= music.size()) {
+				m = 0;
+			}
+			mus = (Music) music.get(m);
+			mus.play();
 		}
 	}
 
