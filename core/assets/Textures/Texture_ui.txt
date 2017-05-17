@@ -1,0 +1,117 @@
+Texture_ui.png
+size: 436, 18
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+btn_unactive
+  rotate: false
+  xy: 1, 1
+  size: 50, 16
+  orig: 256, 256
+  offset: 1, 239
+  index: -1
+btn_active
+  rotate: false
+  xy: 53, 1
+  size: 50, 16
+  orig: 256, 256
+  offset: 53, 239
+  index: -1
+btn_pause
+  rotate: false
+  xy: 255, 1
+  size: 16, 16
+  orig: 256, 256
+  offset: 1, 221
+  index: -1
+btn_pause_pressed
+  rotate: false
+  xy: 273, 1
+  size: 16, 16
+  orig: 256, 256
+  offset: 19, 221
+  index: -1
+btn_play
+  rotate: false
+  xy: 291, 1
+  size: 16, 16
+  orig: 256, 256
+  offset: 166, 221
+  index: -1
+btn_play_pressed
+  rotate: false
+  xy: 309, 1
+  size: 16, 16
+  orig: 256, 256
+  offset: 184, 221
+  index: -1
+btn_pressed
+  rotate: false
+  xy: 105, 1
+  size: 50, 16
+  orig: 256, 256
+  offset: 105, 239
+  index: -1
+check_off
+  rotate: false
+  xy: 327, 1
+  size: 16, 16
+  orig: 256, 256
+  offset: 81, 221
+  index: -1
+check_on
+  rotate: false
+  xy: 345, 1
+  size: 16, 16
+  orig: 256, 256
+  offset: 99, 221
+  index: -1
+heart_alive
+  rotate: false
+  xy: 363, 1
+  size: 13, 13
+  orig: 256, 256
+  offset: 206, 242
+  index: -1
+heart_dead
+  rotate: false
+  xy: 378, 1
+  size: 13, 13
+  orig: 256, 256
+  offset: 221, 242
+  index: -1
+knob
+  rotate: false
+  xy: 405, 1
+  size: 8, 8
+  orig: 256, 256
+  offset: 37, 229
+  index: -1
+logo
+  rotate: false
+  xy: 393, 1
+  size: 10, 10
+  orig: 256, 256
+  offset: 236, 245
+  index: -1
+paused_logo
+  rotate: false
+  xy: 157, 1
+  size: 47, 16
+  orig: 256, 256
+  offset: 117, 221
+  index: -1
+slider
+  rotate: false
+  xy: 393, 13
+  size: 42, 4
+  orig: 256, 256
+  offset: 37, 223
+  index: -1
+terrarum_logo
+  rotate: false
+  xy: 206, 1
+  size: 47, 16
+  orig: 256, 256
+  offset: 157, 239
+  index: -1
