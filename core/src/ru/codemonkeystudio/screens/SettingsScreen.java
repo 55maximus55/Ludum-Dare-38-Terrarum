@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -13,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import ru.codemonkeystudio.game.MyGdxGame;
 
@@ -23,66 +22,83 @@ import ru.codemonkeystudio.game.MyGdxGame;
 public class SettingsScreen implements Screen {
 
     private MyGdxGame game;
-    private Image icon;
-    private Texture textureIcon;
     private Stage stage;
-    private ImageButton button;
-    private ImageButton.ImageButtonStyle buttonStyle;
+    private TextButton Menu;
+    private TextButton.TextButtonStyle MenuStyle;
     private SpriteBatch batch;
     private BitmapFont font;
     private Label label;
     private TextureAtlas atlas;
     private Skin skin;
     private Table table;
-    private Image image;
+    private Button Exit;
+    private Button.ButtonStyle ExitStyle;
 
     private OrthographicCamera gamecam;
     private Viewport gamePort;
 
     public SettingsScreen(MyGdxGame game) {
         gamecam = new OrthographicCamera();
-        gamePort = new FillViewport(800, 600, gamecam);
+        gamePort = new FitViewport(800, 600, gamecam);
 
         batch = new SpriteBatch();
-        font = new BitmapFont(Gdx.files.internal("fonts/Terrarum.fnt"),Gdx.files.internal("fonts/Terrarum.png"), false);
+        font = new BitmapFont(Gdx.files.internal("fonts/Terrarum_16.fnt"), Gdx.files.internal("fonts/Terrarum_16.png"), false);
 
         this.game = game;
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
-        label = new Label("Settings", new Label.LabelStyle(font, Color.WHITE));
-        label.setPosition(0, 0);
-        stage.addActor(label);
-        atlas = new TextureAtlas("Textures/Texture_ui.atlas");
-        skin = new Skin(atlas);
 
-        buttonStyle = new ImageButton.ImageButtonStyle();
-        buttonStyle.up = skin.getDrawable("btn_unactive");//кнопка не нажата
-        buttonStyle.over = skin.getDrawable("btn_active");
-        buttonStyle.down = skin.getDrawable("btn_pressed"); // кнопка нажата
-
-        button = new ImageButton(buttonStyle);
-        button.add(label);
-        button.setSize(100, 100);// размер кнопки
-        button.setPosition(stage.getWidth()/2 - button.getWidth()/2, stage.getHeight()/2 - button.getHeight()/2); // позиция кнопки(с нижнего левого угла координаты считаются)
-        button.addListener(new ClickListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("pressed");
-                return true;
-            }
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("unpressed");
-            }
-        });
-        stage.addActor(button); //добавляем кнопку к сцене
     }
 
     @Override
     public void show () {
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+
+        label = new Label("Settings", new Label.LabelStyle(font, Color.WHITE));
+        label.setPosition(400, 600 - label.getHeight() / 2, 1);
+        stage.addActor(label);
+
+        skin = new Skin();
+        atlas = new TextureAtlas("Textures/textureUI.atlas");
+        skin.addRegions(atlas);
+        MenuStyle = new TextButton.TextButtonStyle();
+        MenuStyle.font = font;
+        MenuStyle.up = skin.getDrawable("btn_default");
+        MenuStyle.over = skin.getDrawable("btn_active");
+        MenuStyle.down = skin.getDrawable("btn_pressed");
+        MenuStyle.pressedOffsetX = 1;
+        MenuStyle.pressedOffsetY = -1;
 
 
+        Menu = new TextButton("Menu", MenuStyle);
+        Menu.setScale(100, 100);
+        Menu.setPosition(400, 300, 1);
+        Menu.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.input.vibrate(20);
+                return true;
+            };
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+            }
+        });
+        stage.addActor(Menu);
 
+//        ExitStyle = new Button.ButtonStyle();
+//        ExitStyle.pressedOffsetX = 1;
+//        ExitStyle.pressedOffsetY = -1;
+//
+//        Exit = new Button(ExitStyle);
+//        Exit.setPosition(400, 200, 1);
+//        Exit.addListener(new ClickListener(){
+//            @Override
+//            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+//                game.dispose();
+//            }
+//        });
+//        stage.addActor(Exit);
     }
 
     @Override
@@ -94,7 +110,7 @@ public class SettingsScreen implements Screen {
         gamecam.update();
         batch.setProjectionMatrix(gamecam.combined);
 
-        stage.act(Gdx.graphics.getDeltaTime());
+        stage.act(delta);
         stage.draw();
 
     }

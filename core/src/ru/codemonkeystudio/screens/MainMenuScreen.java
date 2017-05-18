@@ -1,16 +1,18 @@
 package ru.codemonkeystudio.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import ru.codemonkeystudio.game.MyGdxGame;
@@ -32,9 +34,16 @@ public class MainMenuScreen implements Screen {
 	private Sound sound;
 	private Image icon;
 	private Texture textureIcon;
-	private Stage stage;
 	private ImageButton button;
 	private ImageButton.ImageButtonStyle buttonStyle;
+	private Stage stage;
+	private TextButton Exit, NewGame, Achievements, Settings;
+	private TextButton.TextButtonStyle ExitStyle, NewGameStyle, AchievementsStyle, SettingsStyle;
+	private BitmapFont font;
+	private Label label;
+	private TextureAtlas atlas;
+	private Skin skin;
+	private Table table;
 
 	public MainMenuScreen(MyGdxGame game) {
 		stage = new Stage();
@@ -62,10 +71,104 @@ public class MainMenuScreen implements Screen {
 		cursorY = 0;
 
 		sound = Gdx.audio.newSound(Gdx.files.internal("sounds/select.wav"));
+		font = new BitmapFont(Gdx.files.internal("fonts/Terrarum_16.fnt"), Gdx.files.internal("fonts/Terrarum_16.png"), false);
 	}
 
 	@Override
 	public void show() {
+		stage = new Stage();
+		Gdx.input.setInputProcessor(stage);
+
+		textureIcon = new Texture(Gdx.files.internal("gui/Terrarum.png"));
+		icon = new Image(textureIcon);
+		icon.setPosition(400, stage.getHeight() - icon.getHeight(), 1);
+		stage.addActor(icon);
+
+		skin = new Skin();
+		atlas = new TextureAtlas("Textures/textureUI.atlas");
+		skin.addRegions(atlas);
+
+		ExitStyle = new TextButton.TextButtonStyle();
+		ExitStyle.font = font;
+		ExitStyle.up = skin.getDrawable("btn_default");
+		ExitStyle.over = skin.getDrawable("btn_active");
+		ExitStyle.down = skin.getDrawable("btn_pressed");
+		ExitStyle.pressedOffsetX = 1;
+		ExitStyle.pressedOffsetY = -1;
+
+		SettingsStyle = new TextButton.TextButtonStyle();
+		SettingsStyle.font = font;
+		SettingsStyle.up = skin.getDrawable("btn_default");
+		SettingsStyle.over = skin.getDrawable("btn_active");
+		SettingsStyle.down = skin.getDrawable("btn_pressed");
+		SettingsStyle.pressedOffsetX = 1;
+		SettingsStyle.pressedOffsetY = -1;
+
+		NewGameStyle = new TextButton.TextButtonStyle();
+		NewGameStyle.font = font;
+		NewGameStyle.up = skin.getDrawable("btn_default");
+		NewGameStyle.over = skin.getDrawable("btn_active");
+		NewGameStyle.down = skin.getDrawable("btn_pressed");
+		NewGameStyle.pressedOffsetX = 1;
+		NewGameStyle.pressedOffsetY = -1;
+
+		AchievementsStyle = new TextButton.TextButtonStyle();
+		AchievementsStyle.font = font;
+		AchievementsStyle.up = skin.getDrawable("btn_default");
+		AchievementsStyle.over = skin.getDrawable("btn_active");
+		AchievementsStyle.down = skin.getDrawable("btn_pressed");
+		AchievementsStyle.pressedOffsetX = 1;
+		AchievementsStyle.pressedOffsetY = -1;
+
+		NewGame = new TextButton("New Game", NewGameStyle);
+		NewGame.setScale(100, 100);
+		NewGame.setPosition(400, 500, 1);
+		NewGame.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				dispose();
+				game.setScreen(new GameScreen(game));
+			}
+		});
+
+		Achievements = new TextButton("Achievements", AchievementsStyle);
+		Achievements.setScale(100, 100);
+		Achievements.setPosition(400, 400, 1);
+		Achievements.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				//game.setScreen(new Achievements(game));
+				dispose();
+			}
+		});
+
+		Settings = new TextButton("Settings", SettingsStyle);
+
+		Settings.setPosition(400, 300, 1);
+		Settings.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				dispose();
+				game.setScreen(new SettingsScreen(game));
+			}
+		});
+
+		Exit = new TextButton("Exit", ExitStyle);
+
+		Exit.setPosition(400, 200, 1);
+		Exit.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				dispose();
+				Gdx.app.exit();
+			}
+		});
+
+		stage.addActor(NewGame);
+		stage.addActor(Achievements);
+		stage.addActor(Settings);
+		stage.addActor(Exit);
+
 
 	}
 
@@ -78,52 +181,42 @@ public class MainMenuScreen implements Screen {
 		gamecam.update();
 		batch.setProjectionMatrix(gamecam.combined);
 
-
-
-
-
-		textureIcon = new Texture(Gdx.files.internal("gui/Terrarum.png"));
-		icon = new Image(textureIcon);
-		icon.setPosition(stage.getWidth()/2 - icon.getWidth()/2 ,stage.getHeight() - icon.getHeight()*5);
-		stage.addActor(icon);
-
-
-		stage.act(Gdx.graphics.getDeltaTime());
+		stage.act(delta);
 		stage.draw();
 
-		batch.begin();
-
-		if(selection == 0) batch.draw(btnActive[0], 0, 70);
-		else  batch.draw(btnInactive[0], 0, 70);
-		if(selection == 1) batch.draw(btnActive[1], 0, 50);
-		else  batch.draw(btnInactive[1], 0, 50);
-		if(selection == 2) batch.draw(btnActive[2], 0, 30);
-		else  batch.draw(btnInactive[2], 0, 30);
-		if(selection == 3) batch.draw(btnActive[3], 0, 10);
-		else  batch.draw(btnInactive[3], 0, 10);
-
-		batch.end();
-
-		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-			selection--;
-			if (selection < 0) {
-				selection = 3;
-			}
-			if (selection > 3) {
-				selection = 0;
-			}
-			sound.play();
-		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-			selection++;
-			if (selection < 0) {
-				selection = 3;
-			}
-			if (selection > 3) {
-				selection = 0;
-			}
-			sound.play();
-		}
+//		batch.begin();
+//
+//		if(selection == 0) batch.draw(btnActive[0], 0, 70);
+//		else  batch.draw(btnInactive[0], 0, 70);
+//		if(selection == 1) batch.draw(btnActive[1], 0, 50);
+//		else  batch.draw(btnInactive[1], 0, 50);
+//		if(selection == 2) batch.draw(btnActive[2], 0, 30);
+//		else  batch.draw(btnInactive[2], 0, 30);
+//		if(selection == 3) batch.draw(btnActive[3], 0, 10);
+//		else  batch.draw(btnInactive[3], 0, 10);
+//
+//		batch.end();
+//
+//		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+//			selection--;
+//			if (selection < 0) {
+//				selection = 3;
+//			}
+//			if (selection > 3) {
+//				selection = 0;
+//			}
+//			sound.play();
+//		}
+//		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+//			selection++;
+//			if (selection < 0) {
+//				selection = 3;
+//			}
+//			if (selection > 3) {
+//				selection = 0;
+//			}
+//			sound.play();
+//		}
 
 //		if (cursorX != Gdx.input.getX() || cursorY != Gdx.input.getY()) {
 //			cursorX = Gdx.input.getX();
@@ -150,24 +243,24 @@ public class MainMenuScreen implements Screen {
 //			}
 //		}
 
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isTouched()) {
-			if (selection == 0) {
-				dispose();
-				game.setScreen(new GameScreen(game));
-			}
-			if (selection == 1) {
-				dispose();
+//		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isTouched()) {
+//			if (selection == 0) {
+//				dispose();
+//				game.setScreen(new GameScreen(game));
+//			}
+//			if (selection == 1) {
+//				dispose();
 //				game.setScreen(new MultiplayerMenuScreen(game));
-			}
-			if (selection == 2) {
-				dispose();
-				game.setScreen(new SettingsScreen(game));
-			}
-			if (selection == 3) {
-				dispose();
-				Gdx.app.exit();
-			}
-		}
+//			}
+//			if (selection == 2) {
+//				dispose();
+//				game.setScreen(new SettingsScreen(game));
+//			}
+//			if (selection == 3) {
+//				dispose();
+//				Gdx.app.exit();
+//			}
+//		}
 	}
 
 	@Override
