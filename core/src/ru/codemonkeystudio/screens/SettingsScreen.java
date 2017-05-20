@@ -37,7 +37,7 @@ public class SettingsScreen implements Screen {
     private Button.ButtonStyle ExitStyle;
     private Sound sound;
     private BackgroundImage background;
-    private Slider volumeSlider;
+
 
 
     private OrthographicCamera gamecam;
@@ -62,7 +62,7 @@ public class SettingsScreen implements Screen {
         stage = new Stage(new FitViewport(800, 600, gamecam));
         Gdx.input.setInputProcessor(stage);
 
-        label = new Label("Settings", new Label.LabelStyle(font_32, Color.WHITE));
+        label = new Label("Настройки", new Label.LabelStyle(font_32, Color.WHITE));
         label.setPosition(400, 600 - label.getHeight() / 2, 1);
         stage.addActor(label);
 
@@ -87,6 +87,9 @@ public class SettingsScreen implements Screen {
                 game.setScreen(new MainMenuScreen(game));
             }
         });
+
+
+
         stage.addActor(Exit);
     }
 

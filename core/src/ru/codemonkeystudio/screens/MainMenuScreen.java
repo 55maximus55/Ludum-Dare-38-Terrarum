@@ -103,7 +103,7 @@ public class MainMenuScreen implements Screen {
 		icon.setSize(156, 54);
 		icon.setPosition(stage.getWidth()/2, (stage.getHeight()/6)*5, 1);
 
-		NewGame = new TextButton("New Game", NewGameStyle);
+		NewGame = new TextButton("Новая игра", NewGameStyle);
 		NewGame.setSize(156, 54);
 		NewGame.setPosition(stage.getWidth()/2, (stage.getHeight()/6)*4, 1);
 		NewGame.addListener(new ClickListener() {
@@ -115,7 +115,7 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 
-		Achievements = new TextButton("Achievements", AchievementsStyle);
+		Achievements = new TextButton("Достижения", AchievementsStyle);
 		Achievements.setSize(156, 54);
 		Achievements.setPosition(stage.getWidth()/2, (stage.getHeight()/6)*3, 1);
 		Achievements.addListener(new ClickListener() {
@@ -128,7 +128,7 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 
-		Settings = new TextButton("Settings", SettingsStyle);
+		Settings = new TextButton("Настройки", SettingsStyle);
 		Settings.setSize(156, 54);
 		Settings.setPosition(stage.getWidth()/2, (stage.getHeight()/6)*2, 1);
 		Settings.addListener(new ClickListener() {
@@ -140,7 +140,7 @@ public class MainMenuScreen implements Screen {
 			}
 		});
 
-		Exit = new TextButton("Exit", ExitStyle);
+		Exit = new TextButton("Выход", ExitStyle);
 		Exit.setSize(156, 54);
 		Exit.setPosition(stage.getWidth()/2, (stage.getHeight()/6)*1, 1);
 		Exit.addListener(new ClickListener() {
@@ -169,7 +169,7 @@ public class MainMenuScreen implements Screen {
 		batch.setProjectionMatrix(gamecam.combined);
 
 		stage.act(delta);
-		stage.setDebugAll(true);
+		//stage.setDebugAll(true);
 		stage.draw();
 
 
