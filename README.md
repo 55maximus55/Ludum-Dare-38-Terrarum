@@ -1,1 +1,4 @@
-old48project
+# Terrarum
+
+Игра сделанная для Омского Ludum Dare
+
