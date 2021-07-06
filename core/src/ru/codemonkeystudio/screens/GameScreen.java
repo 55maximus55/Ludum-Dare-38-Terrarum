@@ -40,10 +40,7 @@ public class GameScreen implements Screen {
 		loseSound = Gdx.audio.newMusic(Gdx.files.internal("sounds/lose.mp3"));
 
 		music = new ArrayList();
-		music.add(Gdx.audio.newMusic(Gdx.files.internal("music/Michael Jackson - Beat It.mp3")));
-		music.add(Gdx.audio.newMusic(Gdx.files.internal("music/Michael  Jackson - Billie Jean.mp3")));
-		music.add(Gdx.audio.newMusic(Gdx.files.internal("music/Michael Jackson - Black Or White.mp3")));
-		music.add(Gdx.audio.newMusic(Gdx.files.internal("music/Michael Jackson - Smooth Criminal.mp3")));
+		music.add(Gdx.audio.newMusic(Gdx.files.internal("Terrarum.mp3")));
 		m = 0;
 
 		mus = (Music) music.get(m);
